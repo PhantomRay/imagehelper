@@ -51,6 +51,7 @@ namespace Oceanis.Lib.Image
         private System.Drawing.Image _srcImage;
 
         private const long DEFAULT_JPG_QUALITY = 85L;
+        private const string DEFAULT_ENCODER_INFO = "image/jpeg";
 
         #endregion Member variables
 
@@ -87,18 +88,19 @@ namespace Oceanis.Lib.Image
         #region thumbnail
 
         /// <summary>
-        /// Save resized image to a give path in jpeg format.
+        /// Save resized image to a give path in specified format.
         /// </summary>
         /// <param name="outputFileName">output file name</param>
         /// <param name="outputWidth">output width</param>
         /// <param name="outputHeight">output height</param>
-        /// <param name="lockScale">lock scacle</param>
+        /// <param name="lockRatio">lock scacle</param>
         /// <param name="jpegQuality">jpeg quality. (1-100)</param>
-        public void SaveResizedImage(string outputFileName, int outputWidth, int outputHeight, bool lockRatio, long jpegQuality)
+        /// <param name="encoderInfo">encoder info i.e. jpeg or png</param>
+        public void SaveResizedImage(string outputFileName, int outputWidth, int outputHeight, bool lockRatio, long jpegQuality, string encoderInfo)
         {
             try
             {
-                GetResizedImage(outputWidth, outputHeight, lockRatio).Save(outputFileName, GetEncoderInfo("image/jpeg"), GetEncoderParameters(jpegQuality));
+                GetResizedImage(outputWidth, outputHeight, lockRatio).Save(outputFileName, GetEncoderInfo(encoderInfo), GetEncoderParameters(jpegQuality));
             }
             catch (Exception ex)
             {
@@ -107,15 +109,41 @@ namespace Oceanis.Lib.Image
         }
 
         /// <summary>
+        /// Save resized image to a give path in jpeg format.
+        /// </summary>
+        /// <param name="outputFileName">output file name</param>
+        /// <param name="outputWidth">output width</param>
+        /// <param name="outputHeight">output height</param>
+        /// <param name="lockRatio">lock scacle</param>
+        /// <param name="jpegQuality">jpeg quality. (1-100)</param>
+        public void SaveResizedImage(string outputFileName, int outputWidth, int outputHeight, bool lockRatio, long jpegQuality)
+        {
+            SaveResizedImage(outputFileName, outputWidth, outputHeight, lockRatio, jpegQuality, DEFAULT_ENCODER_INFO);
+        }
+
+        /// <summary>
+        /// Save resized image to a give path in specified format with default quality 85%.
+        /// </summary>
+        /// <param name="outputFileName">output file name</param>
+        /// <param name="outputWidth">output width</param>
+        /// <param name="outputHeight">output height</param>
+        /// <param name="lockRatio">lock scale</param>
+        /// <param name="encoderInfo">encoder info either jpeg or png</param>
+        public void SaveResizedImage(string outputFileName, int outputWidth, int outputHeight, bool lockRatio, string encoderInfo)
+        {
+            SaveResizedImage(outputFileName, outputWidth, outputHeight, lockRatio, DEFAULT_JPG_QUALITY, encoderInfo);
+        }
+
+        /// <summary>
         /// Save resized image to a give path in jpeg format with default quality 85%.
         /// </summary>
         /// <param name="outputFileName">output file name</param>
         /// <param name="outputWidth">output width</param>
         /// <param name="outputHeight">output height</param>
-        /// <param name="lockScale">lock scale</param>
+        /// <param name="lockRatio">lock scale</param>
         public void SaveResizedImage(string outputFileName, int outputWidth, int outputHeight, bool lockRatio)
         {
-            SaveResizedImage(outputFileName, outputWidth, outputHeight, lockRatio, DEFAULT_JPG_QUALITY);
+            SaveResizedImage(outputFileName, outputWidth, outputHeight, lockRatio, DEFAULT_JPG_QUALITY, DEFAULT_ENCODER_INFO);
         }
 
         public void SaveCroppedImage(string outputFileName, int size)
@@ -192,7 +220,9 @@ namespace Oceanis.Lib.Image
                     else
                         return _srcImage;
                 }
-                bmPhoto = new Bitmap(outputWidth, outputHeight, PixelFormat.Format24bppRgb);
+
+                // do not set pixel format then it can detect automatically 24bit for jpeg or 32bit for png for example
+                bmPhoto = new Bitmap(outputWidth, outputHeight);
                 bmPhoto.SetResolution(72, 72);
 
                 attributes = new ImageAttributes();
