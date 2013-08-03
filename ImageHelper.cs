@@ -1,10 +1,15 @@
 //	General image manipulation program.
+//
 //	Current functions:
 //	1.	Generate Thumbnails by specified size and/or quality;
 //	2.	Add text and/or watermaker to images.
 //
 //	Started at: 27/2/2004
 //	Author:	Ray Wang
+//  Copyright 2013 Dragonfish Pty Ltd
+//  Licensed under the Apache License v2.0
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
 
 using System;
 using System.Drawing;
