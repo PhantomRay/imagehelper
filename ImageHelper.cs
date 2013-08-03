@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace Oceanis.Lib.Image
+namespace Dragonfish.Library.Image
 {
     /// <summary>
     /// Generate thumbnail by specifying scale percentage or fixed width & hight.

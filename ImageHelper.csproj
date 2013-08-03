@@ -8,8 +8,8 @@
     <ProjectGuid>{9A2F9C3C-0F6E-4D0B-A9DB-45DD21163051}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Oceanis.Lib.Image</RootNamespace>
-    <AssemblyName>Oceanis.ImageHelper</AssemblyName>
+    <RootNamespace>Dragonfish.Library.ImageHelper</RootNamespace>
+    <AssemblyName>Dragonfish.Library.ImageHelper</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
